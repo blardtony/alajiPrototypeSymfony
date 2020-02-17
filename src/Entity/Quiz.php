@@ -24,15 +24,17 @@ class Quiz
     private $name;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Criteria", mappedBy="quiz")
-     */
-    private $criterias;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="quizzes")
      */
     private $teacher;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Criteria", mappedBy="quiz")
+     */
+    private $criterias;
 
     public function __construct()
     {
@@ -56,6 +58,19 @@ class Quiz
         return $this;
     }
 
+
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
 
     /**
      * @return Collection|Criteria[]
@@ -84,18 +99,6 @@ class Quiz
                 $criteria->setQuiz(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getTeacher(): ?Teacher
-    {
-        return $this->teacher;
-    }
-
-    public function setTeacher(?Teacher $teacher): self
-    {
-        $this->teacher = $teacher;
 
         return $this;
     }

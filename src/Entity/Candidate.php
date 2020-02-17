@@ -28,21 +28,23 @@ class Candidate
      */
     private $email;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Criteria", mappedBy="candidate")
-     */
-    private $criterias;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="candidates")
      */
     private $teacher;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="candidate")
+     */
+    private $results;
+
 
 
     public function __construct()
     {
-        $this->criterias = new ArrayCollection();
+        $this->results = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,36 +76,6 @@ class Candidate
         return $this;
     }
 
-    /**
-     * @return Collection|Criteria[]
-     */
-    public function getCriterias(): Collection
-    {
-        return $this->criterias;
-    }
-
-    public function addCriteria(Criteria $criteria): self
-    {
-        if (!$this->criterias->contains($criteria)) {
-            $this->criterias[] = $criteria;
-            $criteria->setCandidate($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCriteria(Criteria $criteria): self
-    {
-        if ($this->criterias->contains($criteria)) {
-            $this->criterias->removeElement($criteria);
-            // set the owning side to null (unless already changed)
-            if ($criteria->getCandidate() === $this) {
-                $criteria->setCandidate(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getTeacher(): ?Teacher
     {
@@ -113,6 +85,37 @@ class Candidate
     public function setTeacher(?Teacher $teacher): self
     {
         $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Result[]
+     */
+    public function getResults(): Collection
+    {
+        return $this->results;
+    }
+
+    public function addResult(Result $result): self
+    {
+        if (!$this->results->contains($result)) {
+            $this->results[] = $result;
+            $result->setCandidate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResult(Result $result): self
+    {
+        if ($this->results->contains($result)) {
+            $this->results->removeElement($result);
+            // set the owning side to null (unless already changed)
+            if ($result->getCandidate() === $this) {
+                $result->setCandidate(null);
+            }
+        }
 
         return $this;
     }

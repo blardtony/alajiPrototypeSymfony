@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,24 +24,19 @@ class Criteria
     private $name;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $oralreview;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $moodlereview;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="criterias")
      */
     private $quiz;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Candidate", inversedBy="criterias")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="criteria")
      */
-    private $candidate;
+    private $results;
+
+    public function __construct()
+    {
+        $this->results = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -58,30 +55,6 @@ class Criteria
         return $this;
     }
 
-    public function getOralreview(): ?int
-    {
-        return $this->oralreview;
-    }
-
-    public function setOralreview(?int $oralreview): self
-    {
-        $this->oralreview = $oralreview;
-
-        return $this;
-    }
-
-    public function getMoodlereview(): ?int
-    {
-        return $this->moodlereview;
-    }
-
-    public function setMoodlereview(int $moodlereview): self
-    {
-        $this->moodlereview = $moodlereview;
-
-        return $this;
-    }
-
     public function getQuiz(): ?Quiz
     {
         return $this->quiz;
@@ -94,14 +67,33 @@ class Criteria
         return $this;
     }
 
-    public function getCandidate(): ?Candidate
+    /**
+     * @return Collection|Result[]
+     */
+    public function getResults(): Collection
     {
-        return $this->candidate;
+        return $this->results;
     }
 
-    public function setCandidate(?Candidate $candidate): self
+    public function addResult(Result $result): self
     {
-        $this->candidate = $candidate;
+        if (!$this->results->contains($result)) {
+            $this->results[] = $result;
+            $result->setCriteria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResult(Result $result): self
+    {
+        if ($this->results->contains($result)) {
+            $this->results->removeElement($result);
+            // set the owning side to null (unless already changed)
+            if ($result->getCriteria() === $this) {
+                $result->setCriteria(null);
+            }
+        }
 
         return $this;
     }
