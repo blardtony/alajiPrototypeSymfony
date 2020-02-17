@@ -50,6 +50,11 @@ class Teacher implements UserInterface
      */
     private $fullname;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $moodleId;
+
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
@@ -204,6 +209,18 @@ class Teacher implements UserInterface
     public function setFullname(string $fullname): self
     {
         $this->fullname = $fullname;
+
+        return $this;
+    }
+
+    public function getMoodleId(): ?int
+    {
+        return $this->moodleId;
+    }
+
+    public function setMoodleId(int $moodleId): self
+    {
+        $this->moodleId = $moodleId;
 
         return $this;
     }

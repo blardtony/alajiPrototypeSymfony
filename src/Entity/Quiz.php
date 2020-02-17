@@ -36,6 +36,11 @@ class Quiz
      */
     private $criterias;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $moodleId;
+
     public function __construct()
     {
         $this->criterias = new ArrayCollection();
@@ -99,6 +104,18 @@ class Quiz
                 $criteria->setQuiz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMoodleId(): ?int
+    {
+        return $this->moodleId;
+    }
+
+    public function setMoodleId(int $moodleId): self
+    {
+        $this->moodleId = $moodleId;
 
         return $this;
     }

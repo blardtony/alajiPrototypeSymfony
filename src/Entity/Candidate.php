@@ -45,6 +45,11 @@ class Candidate
      */
     private $avatar;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $moodleId;
+
 
 
 
@@ -135,6 +140,18 @@ class Candidate
     public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getMoodleId(): ?int
+    {
+        return $this->moodleId;
+    }
+
+    public function setMoodleId(int $moodleId): self
+    {
+        $this->moodleId = $moodleId;
 
         return $this;
     }
