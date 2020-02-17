@@ -29,6 +29,11 @@ class Quiz
      */
     private $criterias;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="quizzes")
+     */
+    private $teacher;
+
     public function __construct()
     {
         $this->criterias = new ArrayCollection();
@@ -79,6 +84,18 @@ class Quiz
                 $criteria->setQuiz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }
