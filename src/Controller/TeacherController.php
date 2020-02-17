@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Api\TeacherApi;
+use App\Entity\Teacher;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -30,10 +31,16 @@ class TeacherController extends AbstractController
     /**
      * @Route("/teacher/profile", name="teacher_profile")
      */
-    public function getInfos()
+    public function getInfos(TeacherApi $teacherApi)
     {
+        $teacher = $this->getDoctrine()->getRepository(Teacher::class)->findOneBy(['email' => 'jsimonet.alaji@gmail.com']);
+        $idTeacher = $teacher->getMoodleId();
+
+        $courses = $teacherApi->getCourses($idTeacher);
+        dump($courses);
+        die;
         return $this->render('teacher/profile.html.twig', [
-            'controller_name' => 'Tony',
+            $courses
         ]);
     }
 }

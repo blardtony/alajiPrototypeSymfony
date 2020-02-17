@@ -9,6 +9,8 @@ class CandidateApi extends AbstractApi
 
     public function getCandidate()
     {
-    
+        $candidate =  $this->call('core_enrol_get_enrolled_users', [
+            'courseid' => 41
+        ]);
     }
 }
