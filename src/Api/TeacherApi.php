@@ -21,4 +21,11 @@ class TeacherApi extends AbstractApi
             'userid' => $id
         ]);
     }
+
+    public function getQuiz(int $id)
+    {
+        return $this->call('mod_quiz_get_quizzes_by_courses', [
+            'courseids[]' => $id
+        ]);
+    }
 }
