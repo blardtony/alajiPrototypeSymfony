@@ -26,4 +26,14 @@ class TeacherController extends AbstractController
             $teachers
         ]);
     }
+
+    /**
+     * @Route("/teacher/profile", name="teacher_profile")
+     */
+    public function getInfos()
+    {
+        return $this->render('teacher/profile.html.twig', [
+            'controller_name' => 'Tony',
+        ]);
+    }
 }
