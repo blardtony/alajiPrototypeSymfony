@@ -23,10 +23,6 @@ class Quiz
      */
     private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="quizzes")
-     */
-    private $teacher;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Criteria", mappedBy="quiz")
@@ -55,17 +51,6 @@ class Quiz
         return $this;
     }
 
-    public function getTeacher(): ?Teacher
-    {
-        return $this->teacher;
-    }
-
-    public function setTeacher(?Teacher $teacher): self
-    {
-        $this->teacher = $teacher;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Criteria[]

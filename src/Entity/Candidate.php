@@ -33,10 +33,7 @@ class Candidate
      */
     private $criterias;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher", inversedBy="candidates")
-     */
-    private $teacher;
+
 
     public function __construct()
     {
@@ -103,15 +100,4 @@ class Candidate
         return $this;
     }
 
-    public function getTeacher(): ?Teacher
-    {
-        return $this->teacher;
-    }
-
-    public function setTeacher(?Teacher $teacher): self
-    {
-        $this->teacher = $teacher;
-
-        return $this;
-    }
 }
