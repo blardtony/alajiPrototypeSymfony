@@ -28,4 +28,38 @@ class TeacherApi extends AbstractApi
             'courseids[]' => $id
         ]);
     }
+
+    public function getUsers(int $id)
+    {
+        return $this->call('core_enrol_get_enrolled_users', [
+            'courseid' => $id
+        ]);
+    }
+
+    public function getAttempsUser(int $idQuiz, int $idCandidate)
+    {
+        return $this->call('mod_quiz_get_user_attempts', [
+            'quizid' => $idQuiz,
+            'userid' => $idCandidate
+        ]);
+    }
+
+    public function getAttempsReview(int $id)
+    {
+        return $this->call('mod_quiz_get_attempt_review', [
+            'attemptid' => $id,
+        ]);
+    }
+
+    public function getNameQuestion(string $name)
+    {
+        $dom = @DOMDocument::loadHTML($name);
+
+        $finder = new DomXPath($dom);
+        $classname="qtext";
+        $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+        return $nodes->item(0)->nodeValue;
+
+    }
+
 }
