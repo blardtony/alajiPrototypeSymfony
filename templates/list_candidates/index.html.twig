@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListCandidatesController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% for candidate in candidates %}
+        {{ candidate.fullname }}
+    {% endfor %}
+</div>
+{% endblock %}
