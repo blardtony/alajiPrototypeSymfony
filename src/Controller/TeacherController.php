@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Api\TeacherApi;
 use App\Entity\Candidate;
+use App\Entity\Criteria;
 use App\Entity\Quiz;
+use App\Entity\Result;
 use App\Entity\Teacher;
 
 
@@ -160,10 +162,106 @@ class TeacherController extends AbstractController
 
         $attempt = $teacherApi->getAttempsUser($idQuiz, $idMoodleCandidate);
         $idAttempt = end($attempt['attempts'])['id'];
-        dump($idAttempt);
-        die;
+
+        $attemptreview = $teacherApi->getAttempsReview($idAttempt);
+        $questions = $attemptreview['questions'];
+
+        $quizCriteria =  $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['moodleId' => $idQuiz]);
+
+        foreach ($questions as $question) {
+            $nameQuestion = $teacherApi->getNameQuestion($question['html']);
+
+            $criteriaDb =  $this->getDoctrine()->getRepository(Criteria::class)->findOneBy(['name' => $nameQuestion]);
+
+            if (!$criteriaDb) {
+
+                $criteria = new Criteria;
+
+                $criteria->setName($nameQuestion);
+                $criteria->setQuiz($quizCriteria);
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($criteria);
+                $manager->flush();
+
+            }
+        }
+
+        return $this->json([
+            'success' => true,
+
+        ]);
+
+    }
+
+    /**
+     * @Route("/teacher/result", name="result")
+     */
+    public function postResult(TeacherApi $teacherApi)
+    {
+
+        $user = $this->getUser();
+        $userEmail = $user->getEmail();
+
+        $teacher = $this->getDoctrine()->getRepository(Teacher::class)->findOneBy(['email' => $userEmail]);
+
+        $idTeacher = $teacher->getMoodleId();
+
+        $courses = $teacherApi->getCourses($idTeacher);
+        $idCourses = $courses['groups'][0]['courseid'];
+
+        $quizzes = $teacherApi->getQuiz($idCourses);
+        $idQuiz = $quizzes["quizzes"][0]['id'];
+
+        $dbCandidates =  $this->getDoctrine()->getRepository(Candidate::class)->findBy(['teacher' => $teacher ]);
 
 
+        foreach ($dbCandidates as $dbCandidate) {
+
+            $idMoodleCandidate = $dbCandidate->getMoodleId();
+            $idCandidateDb = $dbCandidate->getId();
+
+
+            $attempt = $teacherApi->getAttempsUser($idQuiz, $idMoodleCandidate);
+            $idAttempt = end($attempt['attempts'])['id'];
+
+            $attemptreview = $teacherApi->getAttempsReview($idAttempt);
+            $questions = $attemptreview['questions'];
+
+            foreach ($questions as $question) {
+
+                $testNote = intval($question['mark']);
+                $nameQuestion = $teacherApi->getNameQuestion($question['html']);
+
+
+                $nameCriteria =  $this->getDoctrine()->getRepository(Criteria::class)->findOneBy(['name' => $nameQuestion]);
+                $idNameCriteria = $nameCriteria->getId();
+
+
+                $testNoteDb =  $this->getDoctrine()->getRepository(Result::class)->findOneBy([
+                    'testreview' => $testNote,
+                    'candidate' => $idCandidateDb,
+                    'criteria' => $idNameCriteria
+                ]);
+
+                if (!$testNoteDb) {
+
+                    $result = new Result;
+
+                    $result->setCandidate($dbCandidate);
+                    $result->setCriteria($nameCriteria);
+                    $result->setTestreview($testNote);
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($result);
+                    $manager->flush();
+
+                }
+            }
+
+        }
+        return $this->json([
+            'success' => true,
+
+        ]);
 
     }
 }

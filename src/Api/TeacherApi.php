@@ -5,6 +5,9 @@ namespace App\Api;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpClient\HttpClient;
 
+use \DOMDocument;
+use \DomXPath;
+
 class TeacherApi extends AbstractApi
 {
 
