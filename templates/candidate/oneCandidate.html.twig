@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidat {{candidate.fullname}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% for result in results %}
+        {{ result.testreview }}
+        {{ result.criteria.name }}
+    {% endfor %}
+</div>
+{% endblock %}

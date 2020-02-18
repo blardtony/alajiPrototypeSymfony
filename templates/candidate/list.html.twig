@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ListCandidatesController!{% endblock %}
+{% block title %}Liste de candidats{% endblock %}
 
 {% block body %}
 <div class="container">
     {% for candidate in candidates %}
-        {{ candidate.fullname }}
+        <a href="{{ path('one_candidate', {id : candidate.id}) }}">{{ candidate.fullname }}</a>
     {% endfor %}
 </div>
 {% endblock %}

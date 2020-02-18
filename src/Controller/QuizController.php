@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Quiz;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,8 +14,10 @@ class QuizController extends AbstractController
      */
     public function getQuizzes()
     {
-        $quizzes = $this->getDoctrine()->getRepository(Candidate::class)->findBy(
-            ['teacher' => 1]
+        $user = $this->getUser();
+
+        $quizzes = $this->getDoctrine()->getRepository(Quiz::class)->findBy(
+            ['teacher' => $user]
         );
         return $this->render('quiz/index.html.twig', [
             'quizzes' => $quizzes,
