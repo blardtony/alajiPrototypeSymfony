@@ -10,10 +10,13 @@ class QuizController extends AbstractController
     /**
      * @Route("/quiz", name="quiz_list")
      */
-    public function index()
+    public function getQuizzes()
     {
+        $quizzes = $this->getDoctrine()->getRepository(Candidate::class)->findBy(
+            ['teacher' => 1]
+        );
         return $this->render('quiz/index.html.twig', [
-            'controller_name' => 'QuizController',
+            'quizzes' => $quizzes,
         ]);
     }
 }
