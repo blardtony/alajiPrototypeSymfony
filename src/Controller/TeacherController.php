@@ -170,6 +170,8 @@ class TeacherController extends AbstractController
 
         foreach ($questions as $question) {
             $nameQuestion = $teacherApi->getNameQuestion($question['html']);
+            dump($nameQuestion);
+
 
             $criteriaDb =  $this->getDoctrine()->getRepository(Criteria::class)->findOneBy(['name' => $nameQuestion]);
 
@@ -185,7 +187,7 @@ class TeacherController extends AbstractController
 
             }
         }
-
+        die;
         return $this->json([
             'success' => true,
 

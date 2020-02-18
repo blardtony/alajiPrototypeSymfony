@@ -4,8 +4,19 @@
 
 {% block body %}
 <div class="container">
-    {% for candidate in candidates %}
-        <a href="{{ path('one_candidate', {id : candidate.id}) }}">{{ candidate.fullname }}</a>
-    {% endfor %}
+    <div class="row">
+        {% for candidate in candidates %}
+            <div class="col-md-3 mt-5">
+                <div class="card text-center">
+                    <img src="{{ candidate.avatar }}" alt="Photo de profil de {{ candidate.fullname }}" width="100%" height="250">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ candidate.fullname }}</h5>
+                        <a href="{{ path('one_candidate', {id : candidate.id}) }}" class="btn btn-info">Choisir ce candidat</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
