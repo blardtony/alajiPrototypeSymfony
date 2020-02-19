@@ -15,42 +15,13 @@
                         <div class="col-lg-9">
                             <h5 class="card-title">{{candidate.fullname}}</h5>
                             <p>{{candidate.email}}</p>
+                            <a href="{{path('form_candidate', {id : candidate.id})}}" class="btn btn-primary" >Ajouter les notes de l'entretien oral</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% if request != 'POST' %}
-        <div class="row">
-            <div class="col-md-12 mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <form class="form" action="" method="post">
-                            <div class="form-group">
-                                <label for="criteria1">Critère 1 </label>
-                                <input type="number" name="criteria1" step="1" min="0" max="1" class="form-control" id="criteria1"  placeholder="Enter une note entre 0 et 1">
-                            </div>
-                            <div class="form-group">
-                                <label for="criteria2">Critère 2</label>
-                                <input type="number" name="criteria2" step="1" min="0" max="1" class="form-control" id="criteria2"  placeholder="Enter une note entre 0 et 1">
-                            </div>
-                            <div class="form-group">
-                                <label for="criteria3">Critère 3</label>
-                                <input type="number" name="criteria3" step="1" min="0" max="1" class="form-control" id="criteria3"  placeholder="Enter une note entre 0 et 1">
-                            </div>
-                            <div class="form-group">
-                                <label for="criteria4">Critère 4</label>
-                                <input type="number" name="criteria4" step="1" min="0" max="1" class="form-control" id="criteria4"  placeholder="Enter une note entre 0 et 1">
-                            </div>
-                            <input type="hidden" name="token" value="{{ csrf_token('addCriteria') }}"/>
-                            <input class="btn btn-secondary" type="submit" name="submit" value="Ajouter les notes" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
     <div class="row">
         <div class="col-md-12 mt-5">
             <div class="card">
