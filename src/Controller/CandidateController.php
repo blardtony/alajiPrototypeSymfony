@@ -65,9 +65,12 @@ class CandidateController extends AbstractController
                 $manager->persist($results);
 
                 $manager->flush();
+
             }
+
         }
         $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
+
 
 
         return $this->render('candidate/oneCandidate.html.twig', [
@@ -88,5 +91,17 @@ class CandidateController extends AbstractController
             'candidate' => $candidate,
             'result' => $result
         ]);
+    }
+
+    private function averageCriteria(array $array)
+    {
+        $nbElements = count($array);
+        $sum = 0;
+        $coef = 0;
+        for ($i=0; $i < $nbElements; $i++) {
+          $sum = $sum + ($array[$i][0] * $array[$i][1]);
+          $coef = $coef + $array[$i][1];
+        }
+        return $sum/$coef;
     }
 }

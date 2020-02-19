@@ -36,6 +36,30 @@ class Result
      */
     private $criteria;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $coeforal;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $coeftest;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $average;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $acquis;
+
+
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,4 +112,55 @@ class Result
 
         return $this;
     }
+
+    public function getCoeforal(): ?float
+    {
+        return $this->coeforal;
+    }
+
+    public function setCoeforal(float $coeforal): self
+    {
+        $this->coeforal = $coeforal;
+
+        return $this;
+    }
+
+    public function getCoeftest(): ?float
+    {
+        return $this->coeftest;
+    }
+
+    public function setCoeftest(float $coeftest): self
+    {
+        $this->coeftest = $coeftest;
+
+        return $this;
+    }
+
+    public function getAverage(): ?float
+    {
+        return $this->average;
+    }
+
+    public function setAverage(?float $average): self
+    {
+        $this->average = $average;
+
+        return $this;
+    }
+
+    public function getAcquis(): ?bool
+    {
+        return $this->acquis;
+    }
+
+    public function setAcquis(?bool $acquis): self
+    {
+        $this->acquis = $acquis;
+
+        return $this;
+    }
+
+    
+
 }
