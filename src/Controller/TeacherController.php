@@ -266,4 +266,52 @@ class TeacherController extends AbstractController
         ]);
 
     }
+    /**
+     * @Route("/teacher/coef", name="result")
+     */
+    public function postcoef(TeacherApi $teacherApi)
+    {
+
+        $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['criteria' => 1]);
+
+        foreach ($results as $result) {
+            $result->setCoeforal(0.77);
+            $result->setCoeftest(0.23);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($result);
+        }
+
+        $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['criteria' => 2]);
+        foreach ($results as $result) {
+            $result->setCoeforal(0.11);
+            $result->setCoeftest(0.89);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($result);
+        }
+
+
+        $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['criteria' => 3]);
+        foreach ($results as $result) {
+            $result->setCoeforal(0.48);
+            $result->setCoeftest(0.52);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($result);
+        }
+
+
+        $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['criteria' => 4]);
+        foreach ($results as $result) {
+            $result->setCoeforal(0.66);
+            $result->setCoeftest(0.34);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($result);
+        }
+
+        $manager->flush();
+        return $this->json([
+            'success' => true,
+
+        ]);
+
+    }
 }
