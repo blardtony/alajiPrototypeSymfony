@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "codeception/codeception": "^4.1",
+        "codeception/module-phpbrowser": "^1.0",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.14",
         "symfony/profiler-pack": "^1.0",

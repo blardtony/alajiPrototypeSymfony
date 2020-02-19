@@ -21,6 +21,7 @@ class QuizController extends AbstractController
         );
         return $this->render('quiz/index.html.twig', [
             'quizzes' => $quizzes,
+            'teacher' => $user
         ]);
     }
 }

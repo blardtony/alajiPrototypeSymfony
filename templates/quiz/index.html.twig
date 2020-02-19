@@ -4,7 +4,8 @@
 
 {% block body %}
 <div class="container">
-    <h1 class="text-center">Sélectionnez un quizz</h1>
+    <h1 class="text-center">Examinateur : {{ teacher.fullname }}</h1>
+    <h2 class="">Sélectionnez un quizz</h2>
     {% for quiz in quizzes %}
         <a href="{{ path("list_candidates") }}">{{ quiz.name }}</a>
     {% endfor %}

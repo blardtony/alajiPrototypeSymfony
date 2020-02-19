@@ -8,7 +8,12 @@ class UserCest
     }
 
     // tests
-    public function tryToTest(AcceptanceTester $I)
+    public function tryToLogin(AcceptanceTester $I)
     {
+        $I->amOnPage('/login');
+        $I->fillField('email', 'jsimonet.alaji@gmail.com');
+        $I->fillField('password', 'julien');
+        $I->click('Se connecter');
+        $I->see('Examinateur : Julien Simonet');
     }
 }
