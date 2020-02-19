@@ -15,7 +15,12 @@
                         <div class="col-lg-9">
                             <h5 class="card-title">{{candidate.fullname}}</h5>
                             <p>{{candidate.email}}</p>
-                            <a href="{{path('form_candidate', {id : candidate.id})}}" class="btn btn-primary" >Ajouter les notes de l'entretien oral</a>
+                            {% if not results[0].oralreview %}
+                                <a href="{{path('form_candidate', {id : candidate.id})}}" class="btn btn-primary" >Ajouter les notes de l'entretien oral</a>
+                            {% else %}
+                                <a href="{{path('form_candidate', {id : candidate.id})}}" class="btn btn-primary" >Editer les notes de l'entretien oral</a>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>

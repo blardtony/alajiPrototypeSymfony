@@ -6,7 +6,11 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center mt-5">
-            <h1 class="card-title">Ajouter les notes de {{candidate.fullname}}</h1>
+            {% if not result[0].oralreview %}
+                <h1>Ajouter les notes de {{candidate.fullname}}</h1>
+            {% else %}
+                <h1>Éditer les notes de {{candidate.fullname}}</h1>
+            {% endif %}
         </div>
     </div>
     <div class="row">

@@ -32,7 +32,7 @@ class CandidateController extends AbstractController
     public function getCandidate(int $id, Request $request)
     {
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
-        
+
         if ($request->isMethod('POST')) {
             $submittedToken = $request->request->get('token');
             if ($this->isCsrfTokenValid('addCriteria', $submittedToken)) {
@@ -80,13 +80,12 @@ class CandidateController extends AbstractController
      */
     public function getFormCandidate(int $id, Request $request)
     {
-
-
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
-
+        $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 
         return $this->render('candidate/form.html.twig', [
             'candidate' => $candidate,
+            'result' => $result
         ]);
     }
 }
