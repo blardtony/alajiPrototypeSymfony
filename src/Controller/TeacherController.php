@@ -55,26 +55,18 @@ class TeacherController extends AbstractController
         $idQuiz = $quizzes["quizzes"][0]['id'];
 
         $quizDb = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['moodleId' => $idQuiz]);
-        if (!$quizDb) {
-            $quiz = new Quiz;
-            $quiz->setName($nameQuiz);
-            $quiz->setMoodleId($idQuiz);
-            $quiz->setTeacher($teacher);
 
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($quiz);
-            $manager->flush();
-            return $this->json([
-                'success' => true,
-                'idQuiz' => $quiz->getId()
-            ]);
-        }
+        $quizDb->setName($nameQuiz);
+        $quizDb->setMoodleId($idQuiz);
+        $quizDb->setTeacher($teacher);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($quizDb);
+        $manager->flush();
 
         return $this->json([
             'success' => true,
-            'quizzes' => "All quizzes are in the database"
         ]);
-
     }
 
     /**
@@ -109,24 +101,22 @@ class TeacherController extends AbstractController
                 $idCandidate = $user['id'];
                 $fullnameCandidate = $user['fullname'];
                 $avatarCandidate = $user['profileimageurl'];
+
                 $emailCandidate = $user['email'];
 
                 $candidateDb =  $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['moodleId' => $idCandidate]);
-                if (!$candidateDb) {
 
-                    $candidate = new Candidate;
 
-                    $candidate->setFullname($fullnameCandidate);
-                    $candidate->setMoodleId($idCandidate);
-                    $candidate->setEmail($emailCandidate);
-                    $candidate->setTeacher($teacher);
-                    $candidate->setAvatar($avatarCandidate);
+                $candidateDb->setFullname($fullnameCandidate);
+                $candidateDb->setMoodleId($idCandidate);
+                $candidateDb->setEmail($emailCandidate);
+                $candidateDb->setTeacher($teacher);
+                $candidateDb->setAvatar($avatarCandidate);
 
-                    $manager = $this->getDoctrine()->getManager();
-                    $manager->persist($candidate);
-                    $manager->flush();
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($candidateDb);
+                $manager->flush();
 
-                }
             }
 
         }
@@ -175,17 +165,13 @@ class TeacherController extends AbstractController
 
             $criteriaDb =  $this->getDoctrine()->getRepository(Criteria::class)->findOneBy(['name' => $nameQuestion]);
 
-            if (!$criteriaDb) {
+            $criteriaDb->setName($nameQuestion);
+            $criteriaDb->setQuiz($quizCriteria);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($criteriaDb);
+            $manager->flush();
 
-                $criteria = new Criteria;
 
-                $criteria->setName($nameQuestion);
-                $criteria->setQuiz($quizCriteria);
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($criteria);
-                $manager->flush();
-
-            }
         }
 
         return $this->json([
@@ -245,18 +231,15 @@ class TeacherController extends AbstractController
                     'criteria' => $idNameCriteria
                 ]);
 
-                if (!$testNoteDb) {
 
-                    $result = new Result;
+                $testNoteDb->setCandidate($dbCandidate);
+                $testNoteDb->setCriteria($nameCriteria);
+                $testNoteDb->setTestreview($testNote);
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($testNoteDb);
+                $manager->flush();
 
-                    $result->setCandidate($dbCandidate);
-                    $result->setCriteria($nameCriteria);
-                    $result->setTestreview($testNote);
-                    $manager = $this->getDoctrine()->getManager();
-                    $manager->persist($result);
-                    $manager->flush();
 
-                }
             }
 
         }
