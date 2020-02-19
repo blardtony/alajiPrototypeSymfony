@@ -19,9 +19,9 @@ class AcquisTest extends \Codeception\Test\Unit
     }
 
     // tests
-    public function testAcquis(TeacherApi $teacherApi)
+    public function testAcquis()
     {
-        $acquis = $teacherApi->acquis(0.5);
+        $acquis = acquis(0.5);
         $this->assertEquals("Acquis", $acquis);
     }
 }

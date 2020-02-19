@@ -19,10 +19,9 @@ class AverageTest extends \Codeception\Test\Unit
     }
 
     // tests
-    public function testAverage(TeacherApi $teacherApi)
+    public function testAverage()
     {
-
-        $average = $teacherApi->averageCriteria(1, 0.77, 0, 0.23);
+        $average = averageCriteria(1, 0.77, 0, 0.23);
         $this->assertEquals(0.77, $average);
     }
 }
