@@ -5,5 +5,10 @@
 actor: UnitTester
 modules:
     enabled:
+        - Symfony:
+            app_path: 'src'
+            environment: 'test'
+        - Doctrine2:
+            depends: Symfony
         - Asserts
         - \App\Tests\Helper\Unit

@@ -1,4 +1,6 @@
-<?php namespace App\Tests;
+<?php
+namespace App\Tests;
+
 use App\Tests\AcceptanceTester;
 
 class UserCest
@@ -8,7 +10,7 @@ class UserCest
     }
 
     // tests
-    public function tryToLogin(AcceptanceTester $I)
+    public function tryToLoginJulien(AcceptanceTester $I)
     {
         $I->amOnPage('/login');
         $I->fillField('email', 'jsimonet.alaji@gmail.com');
