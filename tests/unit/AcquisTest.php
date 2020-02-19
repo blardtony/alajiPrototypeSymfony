@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests;
 
+use App\Api\TeacherApi;
 
 class AcquisTest extends \Codeception\Test\Unit
 {
@@ -18,18 +19,9 @@ class AcquisTest extends \Codeception\Test\Unit
     }
 
     // tests
-    public function testAcquis()
+    public function testAcquis(TeacherApi $teacherApi)
     {
-        function acquis(float $moyenne)
-        {
-            if ($moyenne>=0.5) {
-                $response = "Acquis";
-            }else {
-                $response = "Non acquis";
-            }
-            return $response;
-        }
-        $acquis = acquis(0.5);
+        $acquis = $teacherApi->acquis(0.5);
         $this->assertEquals("Acquis", $acquis);
     }
 }
