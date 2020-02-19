@@ -69,6 +69,7 @@ class CandidateController extends AbstractController
         }
         $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 
+
         return $this->render('candidate/oneCandidate.html.twig', [
             'candidate' => $candidate,
             'results' => $result
