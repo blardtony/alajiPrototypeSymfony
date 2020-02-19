@@ -56,7 +56,8 @@ class TeacherApi extends AbstractApi
 
     public function getNameQuestion(string $name)
     {
-        $dom = @DOMDocument::loadHTML($name);
+        $names = mb_convert_encoding($name, 'HTML-ENTITIES', 'UTF-8');
+        $dom = @DOMDocument::loadHTML($names);
 
         $finder = new DomXPath($dom);
         $classname="qtext";
