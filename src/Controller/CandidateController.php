@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Api\TeacherApi;
+
 use App\Entity\Candidate;
 use App\Entity\Result;
 
@@ -21,6 +23,10 @@ class CandidateController extends AbstractController
             ['teacher' => $user]
         );
 
+        foreach ($candidates as $candidate) {
+
+        }
+
         return $this->render('candidate/list.html.twig', [
             'candidates' => $candidates,
         ]);
@@ -29,7 +35,7 @@ class CandidateController extends AbstractController
     /**
      * @Route("/candidate/{id}", name="one_candidate")
      */
-    public function getCandidate(int $id, Request $request)
+    public function getCandidate(int $id, Request $request, TeacherApi $teacherApi)
     {
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
 
@@ -67,15 +73,32 @@ class CandidateController extends AbstractController
                 $manager->flush();
 
             }
+            $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
+            foreach ($results as $result) {
+
+                $oral = $result->getOralreview();
+                $test = $result->getTestreview();
+                $coefTest = $result->getCoeftest();
+                $coefOral = $result->getCoeforal();
+                $average  = $teacherApi->averageCriteria($test, $coefTest, $oral, $coefOral);
+
+                $acquis = $teacherApi->acquis($average);
+
+
+                $result->setAverage($average);
+                $result->setAcquis($acquis);
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($result);
+                $manager->flush();
+
+            }
 
         }
-        $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
-
-
+        $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 
         return $this->render('candidate/oneCandidate.html.twig', [
             'candidate' => $candidate,
-            'results' => $result
+            'results' => $results
         ]);
     }
 
@@ -93,15 +116,5 @@ class CandidateController extends AbstractController
         ]);
     }
 
-    private function averageCriteria(array $array)
-    {
-        $nbElements = count($array);
-        $sum = 0;
-        $coef = 0;
-        for ($i=0; $i < $nbElements; $i++) {
-          $sum = $sum + ($array[$i][0] * $array[$i][1]);
-          $coef = $coef + $array[$i][1];
-        }
-        return $sum/$coef;
-    }
+
 }

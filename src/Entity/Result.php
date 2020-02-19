@@ -52,10 +52,9 @@ class Result
     private $average;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $acquis;
-
 
 
 
@@ -149,18 +148,18 @@ class Result
         return $this;
     }
 
-    public function getAcquis(): ?bool
+    public function getAcquis(): ?string
     {
         return $this->acquis;
     }
 
-    public function setAcquis(?bool $acquis): self
+    public function setAcquis(?string $acquis): self
     {
         $this->acquis = $acquis;
 
         return $this;
     }
 
-    
+
 
 }

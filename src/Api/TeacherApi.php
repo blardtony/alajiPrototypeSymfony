@@ -66,4 +66,27 @@ class TeacherApi extends AbstractApi
 
     }
 
+    public function averageCriteria(int $test, float $coeftest, int $oral, float $coeforal)
+    {
+        $array = [[$test, $coeftest], [$oral, $coeforal]];
+        $nbElements = count($array);
+        $sum = 0;
+        $coef = 0;
+        for ($i=0; $i < $nbElements; $i++) {
+          $sum = $sum + ($array[$i][0] * $array[$i][1]);
+          $coef = $coef + $array[$i][1];
+        }
+        return $sum/$coef;
+    }
+
+    function acquis(float $moyenne)
+    {
+        if ($moyenne>=0.5) {
+            $response = "Acquis";
+        }else {
+            $response = "Non acquis";
+        }
+        return $response;
+    }
+
 }
