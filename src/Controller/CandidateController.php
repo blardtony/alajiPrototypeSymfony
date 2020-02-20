@@ -13,15 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class CandidateController extends AbstractController
 {
     /**
-     * @Route("/quiz/{id}/candidates", name="list_candidates")
+     * @Route("/quiz/{name}/candidates", name="list_candidates")
      */
-    public function getAllCandidates(int $id)
+    public function getAllCandidates(string $name)
     {
         $user = $this->getUser();
         $candidates = $this->getDoctrine()->getRepository(Candidate::class)->findBy(
             ['teacher' => $user]
         );
-        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['id' => $id]);
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $name]);
 
         foreach ($candidates as $candidate) {
 
@@ -34,12 +34,12 @@ class CandidateController extends AbstractController
     }
 
     /**
-     * @Route("/quiz/{idQ}/candidates/{id}", name="one_candidate")
+     * @Route("/quiz/{nameQ}/candidates/{nameC}", name="one_candidate")
      */
-    public function getCandidate(int $id, Request $request, TeacherApi $teacherApi, int $idQ)
+    public function getCandidate(string $nameC, Request $request, TeacherApi $teacherApi, string $nameQ)
     {
-        $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
-        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['id' => $idQ]);
+        $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $nameQ]);
 
         if ($request->isMethod('POST')) {
             $submittedToken = $request->request->get('token');
@@ -106,12 +106,12 @@ class CandidateController extends AbstractController
     }
 
     /**
-     * @Route("/quiz/{idQ}/candidates/{id}/form", name="form_candidate")
+     * @Route("/quiz/{nameQ}/candidates/{nameC}/form", name="form_candidate")
      */
-    public function getFormCandidate(int $id, int $idQ, Request $request)
+    public function getFormCandidate(string $nameC, string $nameQ, Request $request)
     {
-        $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
-        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['id' => $idQ]);
+        $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $nameQ]);
 
         $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 

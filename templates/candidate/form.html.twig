@@ -17,7 +17,7 @@
         <div class="col-md-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <form class="form" action="{{path('one_candidate', {id : candidate.id, idQ: quiz.id})}}" method="post">
+                    <form class="form" action="{{path('one_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" method="post">
                         <div class="form-group">
                             <label for="criteria1">Critère 1 </label>
                             <input type="number" name="criteria1" step="1" min="0" max="1" class="form-control criteria1" id="criteria1"  placeholder="Enter une note entre 0 et 1">

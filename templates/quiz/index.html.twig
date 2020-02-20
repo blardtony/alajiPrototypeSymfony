@@ -7,7 +7,7 @@
     <h1 class="text-center">Examinateur : {{ teacher.fullname }}</h1>
     <h2 class="">Sélectionnez un quizz</h2>
     {% for quiz in quizzes %}
-        <a href="{{ path("list_candidates", {id : quiz.id} ) }}">{{ quiz.name }}</a>
+        <a href="{{ path("list_candidates", {name : quiz.name} ) }}">{{ quiz.name }}</a>
     {% endfor %}
 </div>
 {% endblock %}
