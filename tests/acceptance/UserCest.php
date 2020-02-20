@@ -36,4 +36,11 @@ class UserCest
         $I->click('Se connecter');
         $I->see('Email could not be found.');
     }
+
+    public function tryToLogout(AcceptanceTester $I)
+    {
+        $I->amOnPage('/quiz');
+        $I->click('.logout');
+        $I->see('Se connecter');
+    }
 }
