@@ -110,23 +110,13 @@ class CandidateController extends AbstractController
     /**
      * @Route("/quiz/{nameQ}/candidates/{nameC}/summary", name="summary_candidate")
      */
-    public function getSummary(string $nameC, string $nameQ, Request $request)
+    public function getSummary(string $nameC, Request $request)
     {
-        $user = $this->getUser();
+
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
-        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $nameQ]);
-
-        $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
-
-        $criteria = $this->getDoctrine()->getRepository(Criteria::class)->findBy(['quiz' => $quiz]);
 
         return $this->render('candidate/summary.html.twig', [
             'candidate' => $candidate,
-            'result' => $result,
-            'quiz' => $quiz,
-            'criterias' => $criteria,
-            'teacher' => $user
-
         ]);
     }
 
