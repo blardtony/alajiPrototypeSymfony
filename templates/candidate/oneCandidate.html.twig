@@ -39,14 +39,14 @@
                             <th>Oral</th>
                             <th>Moyenne critère</th>
                             <th>Acquis</th>
-                            </tr>
+                        </tr>
                         </thead>
                         <tbody>
                             {% for result in results %}
                                 <tr>
                                     <th>{{ result.criteria.name }}</th>
                                     <td>{{ result.testreview }}</td>
-                                    <td>{{ result.oralreview }}</td>
+                                    <td class="oral">{{ result.oralreview }}</td>
                                     <td>{{ result.average}}</td>
                                     <td>{{ result.acquis}}</td>
                                 </tr>
