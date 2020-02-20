@@ -144,6 +144,27 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
+    "firebase/php-jwt": {
+        "version": "v5.0.0"
+    },
+    "google/apiclient": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "49c5d7a66d863d28513979bf0666dc77599100c0"
+        },
+        "files": [
+            "config/packages/google_apiclient.yaml"
+        ]
+    },
+    "google/apiclient-services": {
+        "version": "v0.127"
+    },
+    "google/auth": {
+        "version": "v1.7.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
     },
@@ -188,6 +209,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.0.1"
+    },
+    "phpseclib/phpseclib": {
+        "version": "2.0.23"
     },
     "phpspec/prophecy": {
         "version": "v1.10.2"
