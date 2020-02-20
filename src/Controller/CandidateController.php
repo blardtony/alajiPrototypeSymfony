@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Api\TeacherApi;
 use App\Entity\Candidate;
+use App\Entity\Criteria;
 use App\Entity\Quiz;
 use App\Entity\Result;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,10 +116,13 @@ class CandidateController extends AbstractController
 
         $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 
+        $criteria = $this->getDoctrine()->getRepository(Criteria::class)->findBy(['quiz' => $quiz]);
+
         return $this->render('candidate/form.html.twig', [
             'candidate' => $candidate,
             'result' => $result,
-            'quiz' => $quiz
+            'quiz' => $quiz,
+            'criterias' => $criteria
         ]);
     }
 
