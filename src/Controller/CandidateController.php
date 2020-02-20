@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Api\TeacherApi;
-
 use App\Entity\Candidate;
+use App\Entity\Quiz;
 use App\Entity\Result;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,14 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class CandidateController extends AbstractController
 {
     /**
-     * @Route("/candidates/list", name="list_candidates")
+     * @Route("/quiz/{id}/candidates", name="list_candidates")
      */
-    public function getAllCandidates()
+    public function getAllCandidates(int $id)
     {
         $user = $this->getUser();
         $candidates = $this->getDoctrine()->getRepository(Candidate::class)->findBy(
             ['teacher' => $user]
         );
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['id' => $id]);
 
         foreach ($candidates as $candidate) {
 
@@ -29,15 +29,17 @@ class CandidateController extends AbstractController
 
         return $this->render('candidate/list.html.twig', [
             'candidates' => $candidates,
+            'quiz' => $quiz
         ]);
     }
 
     /**
-     * @Route("/candidate/{id}", name="one_candidate")
+     * @Route("/quiz/{idQ}/candidates/{id}", name="one_candidate")
      */
-    public function getCandidate(int $id, Request $request, TeacherApi $teacherApi)
+    public function getCandidate(int $id, Request $request, TeacherApi $teacherApi, int $idQ)
     {
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['id' => $idQ]);
 
         if ($request->isMethod('POST')) {
             $submittedToken = $request->request->get('token');
@@ -98,21 +100,25 @@ class CandidateController extends AbstractController
 
         return $this->render('candidate/oneCandidate.html.twig', [
             'candidate' => $candidate,
-            'results' => $results
+            'results' => $results,
+            'quiz' => $quiz
         ]);
     }
 
     /**
-     * @Route("/candidate/{id}/form", name="form_candidate")
+     * @Route("/quiz/{idQ}/candidates/{id}/form", name="form_candidate")
      */
-    public function getFormCandidate(int $id, Request $request)
+    public function getFormCandidate(int $id, int $idQ, Request $request)
     {
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->find($id);
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['id' => $idQ]);
+
         $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 
         return $this->render('candidate/form.html.twig', [
             'candidate' => $candidate,
-            'result' => $result
+            'result' => $result,
+            'quiz' => $quiz
         ]);
     }
 
