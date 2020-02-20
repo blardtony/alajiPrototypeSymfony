@@ -42,6 +42,7 @@ class CandidateController extends AbstractController
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
         $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $nameQ]);
 
+        //Envoie du formulaire en base de donnée.
         if ($request->isMethod('POST')) {
             $submittedToken = $request->request->get('token');
             if ($this->isCsrfTokenValid('addCriteria', $submittedToken)) {
@@ -76,7 +77,9 @@ class CandidateController extends AbstractController
                 $manager->flush();
 
             }
+
             $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
+            //Calcul de la moyenne et vérifier si le critère est acquis ou pas.
             foreach ($results as $result) {
 
                 $oral = $result->getOralreview();
@@ -86,7 +89,6 @@ class CandidateController extends AbstractController
                 $average  = $teacherApi->averageCriteria($test, $coefTest, $oral, $coefOral);
 
                 $acquis = $teacherApi->acquis($average);
-
 
                 $result->setAverage($average);
                 $result->setAcquis($acquis);
