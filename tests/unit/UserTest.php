@@ -28,12 +28,12 @@ class UserTest extends \Codeception\Test\Unit
         $user->setFullname('Formateur');
         $user->setMoodleId(2);
 
-        $user->save();
 
         $this->assertEquals('Formateur', $user->getFullname());
         $this->assertEquals('formateur@alaji.fr', $user->getEmail());
-        $this->assertEquals('["ROLE_USER"]', $user->getRoles());
+        $this->assertEquals(["ROLE_USER"], $user->getRoles());
         $this->assertEquals('123456', $user->getPassword());
         $this->assertEquals(2, $user->getMoodleId());
+
     }
 }
