@@ -20,6 +20,7 @@
                             {% else %}
                                 <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Ajouter les notes de l'entretien oral</a>
                             {% endif %}
+                            <a href="{{path('summary_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Obtenir récapitulatif</a>
                         </div>
                     </div>
                 </div>

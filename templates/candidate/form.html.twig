@@ -18,10 +18,18 @@
             <div class="card">
                 <div class="card-body">
                     <form class="form" action="{{path('one_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" method="post">
-                        {% for criteria in criterias %}
+                        {% for criteria in quiz.criterias %}
                             <div class="form-group">
-                                <label for="criteria{{criteria.id}}">{{criteria.name}}</label>
-                                <input type="number" name="criteria{{criteria.id}}" step="1" min="0" max="1" class="form-control criteria{{criteria.id}}" id="criteria{{criteria.id}}"  placeholder="Enter une note entre 0 et 1">
+                                <label for="criteria[{{criteria.id}}]">{{criteria.name}}</label>
+                                <input
+                                    type="number"
+                                    name="criteria[{{criteria.id}}]"
+                                    step="1" min="0"
+                                    max="1"
+                                    class="form-control criteria{{criteria.id}}"
+                                    id="criteria{{criteria.id}}"
+                                    placeholder="Enter une note entre 0 et 1"
+                                >
                             </div>
                         {% endfor %}
                         <input type="hidden" name="token" value="{{ csrf_token('addCriteria') }}"/>

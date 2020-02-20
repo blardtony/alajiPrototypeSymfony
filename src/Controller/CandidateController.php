@@ -46,36 +46,18 @@ class CandidateController extends AbstractController
         if ($request->isMethod('POST')) {
             $submittedToken = $request->request->get('token');
             if ($this->isCsrfTokenValid('addCriteria', $submittedToken)) {
-                $oral1 = intval($_POST['criteria1']);
-                $oral2 = intval($_POST['criteria2']);
-                $oral3 = intval($_POST['criteria3']);
-                $oral4 = intval($_POST['criteria4']);
-
-                $results = $this->getDoctrine()->getRepository(Result::class)->findOneBy(['candidate' => $candidate, 'criteria' => 1]);
-                $results->setOralreview($oral1);
+                $criterias = $request->request->get('criteria');
                 $manager = $this->getDoctrine()->getManager();
-                $manager->persist($results);
-
-
-                $results = $this->getDoctrine()->getRepository(Result::class)->findOneBy(['candidate' => $candidate, 'criteria' => 2]);
-                $results->setOralreview($oral2);
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($results);
-
-
-                $results = $this->getDoctrine()->getRepository(Result::class)->findOneBy(['candidate' => $candidate, 'criteria' => 3]);
-                $results->setOralreview($oral3);
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($results);
-
-
-                $results = $this->getDoctrine()->getRepository(Result::class)->findOneBy(['candidate' => $candidate, 'criteria' => 4]);
-                $results->setOralreview($oral4);
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($results);
-
+                foreach ($quiz->getCriterias() as $criteria) {
+                    $result = $this->getDoctrine()->getRepository(Result::class)->findOneBy([
+                        'candidate' => $candidate,
+                        'criteria' => $criteria
+                    ]);
+                    $review = (int) $criterias[$criteria->getId()];
+                    $result->setOralreview($review);
+                    $manager->persist($result);
+                }
                 $manager->flush();
-
             }
 
             $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
@@ -118,15 +100,34 @@ class CandidateController extends AbstractController
 
         $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
 
-        $criteria = $this->getDoctrine()->getRepository(Criteria::class)->findBy(['quiz' => $quiz]);
-
         return $this->render('candidate/form.html.twig', [
             'candidate' => $candidate,
             'result' => $result,
             'quiz' => $quiz,
-            'criterias' => $criteria
         ]);
     }
 
+    /**
+     * @Route("/quiz/{nameQ}/candidates/{nameC}/summary", name="summary_candidate")
+     */
+    public function getSummary(string $nameC, string $nameQ, Request $request)
+    {
+        $user = $this->getUser();
+        $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
+        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $nameQ]);
+
+        $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
+
+        $criteria = $this->getDoctrine()->getRepository(Criteria::class)->findBy(['quiz' => $quiz]);
+
+        return $this->render('candidate/summary.html.twig', [
+            'candidate' => $candidate,
+            'result' => $result,
+            'quiz' => $quiz,
+            'criterias' => $criteria,
+            'teacher' => $user
+
+        ]);
+    }
 
 }

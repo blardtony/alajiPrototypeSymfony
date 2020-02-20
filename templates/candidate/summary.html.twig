@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récapitulatif {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-3">Tableau récapitulatif</h2>
+        <div class="table-responsive mt-5">
+            <table class="table table-bordered">
+
+            <tbody>
+                <tr>
+                    <td>{{ teacher.fullname }}</td>
+
+                </tr>
+                {% for criteria in criterias %}
+                    <tr>
+                        <th>{{ criteria.name }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
