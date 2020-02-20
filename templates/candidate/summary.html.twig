@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h2 class="text-center mt-3">Tableaux récapitulatifs</h2>
+        <h2 class="text-center mt-3">Récapitulatif</h2>
         <div class="row">
             <div class="col-md-6">
                 <img src="https://www.alaji.fr/wp-content/uploads/logo.png" alt="Logo alaji" width="50%"  class="mt-5 ml-5">
@@ -14,18 +14,20 @@
                     <table class="table table-bordered text-center">
                         <thead>
                             <tr>
-                                <th>Information éxaminateur</th>
+                                <th colspan="2">Information éxaminateur</th>
                                 <th colspan="2">Information candidat</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th>Nom de l'éxaminateur</th>
+                                <th>Organisme</th>
                                 <th>Nom du candidat</th>
                                 <th>Email</th>
                             </tr>
                             <tr>
                                 <td>{{candidate.teacher.fullname}}</td>
+                                <td>Alaji</td>
                                 <td>{{candidate.fullname}}</td>
                                 <td>{{candidate.email}}</td>
                             </tr>
