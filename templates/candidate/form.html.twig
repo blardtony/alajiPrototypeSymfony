@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center mt-5">
-            {% if  result[0].oralreview is  empty %}
+            {% if  candidate.results[0].oralreview is  empty %}
                 <h1>Ajouter les notes de {{candidate.fullname}}</h1>
             {% else %}
                 <h1>Éditer les notes de {{candidate.fullname}}</h1>

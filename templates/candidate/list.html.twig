@@ -6,7 +6,7 @@
 <div class="container">
     <h1 class="text-center mt-3">Listes des candidats</h1>
     <div class="row">
-        {% for candidate in candidates %}
+        {% for candidate in teacher.candidates %}
             <div class="col-md-3 mt-5">
                 <div class="card text-center">
                     <img src="{{ candidate.avatar }}" alt="Photo de profil de {{ candidate.fullname }}" width="100%" height="250">

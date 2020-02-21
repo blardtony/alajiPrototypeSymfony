@@ -19,17 +19,11 @@ class CandidateController extends AbstractController
     public function getAllCandidates(string $name)
     {
         $user = $this->getUser();
-        $candidates = $this->getDoctrine()->getRepository(Candidate::class)->findBy(
-            ['teacher' => $user]
-        );
+
         $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $name]);
 
-        foreach ($candidates as $candidate) {
-
-        }
-
         return $this->render('candidate/list.html.twig', [
-            'candidates' => $candidates,
+            'teacher' => $user,
             'quiz' => $quiz
         ]);
     }
@@ -63,29 +57,24 @@ class CandidateController extends AbstractController
             $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
             //Calcul de la moyenne et vérifier si le critère est acquis ou pas.
             foreach ($results as $result) {
-
                 $oral = $result->getOralreview();
                 $test = $result->getTestreview();
                 $coefTest = $result->getCoeftest();
                 $coefOral = $result->getCoeforal();
-                $average  = $teacherApi->averageCriteria($test, $coefTest, $oral, $coefOral);
 
+                $average  = $teacherApi->averageCriteria($test, $coefTest, $oral, $coefOral);
                 $acquis = $teacherApi->acquis($average);
 
                 $result->setAverage($average);
                 $result->setAcquis($acquis);
+
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($result);
                 $manager->flush();
-
             }
-
         }
-        $results = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
-
         return $this->render('candidate/oneCandidate.html.twig', [
             'candidate' => $candidate,
-            'results' => $results,
             'quiz' => $quiz
         ]);
     }
@@ -97,12 +86,8 @@ class CandidateController extends AbstractController
     {
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
         $quiz = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['name' => $nameQ]);
-
-        $result = $this->getDoctrine()->getRepository(Result::class)->findBy(['candidate' => $candidate]);
-
         return $this->render('candidate/form.html.twig', [
             'candidate' => $candidate,
-            'result' => $result,
             'quiz' => $quiz,
         ]);
     }
