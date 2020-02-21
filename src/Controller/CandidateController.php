@@ -9,6 +9,7 @@ use App\Entity\Quiz;
 use App\Entity\Result;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -98,7 +99,7 @@ class CandidateController extends AbstractController
     /**
      * @Route("/quiz/{nameQ}/candidates/{nameC}/summary", name="summary_candidate")
      */
-    public function getSummary(string $nameC, Request $request)
+    public function getSummary(string $nameC, Request $request, MarkdownParserInterface $parser)
     {
 
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
@@ -112,8 +113,10 @@ class CandidateController extends AbstractController
 
             // Retrieve the HTML generated in our twig file
             $html = $this->renderView('candidate/pdfSummary.html.twig', [
-                'title' => "Welcome to our PDF Test"
+                'candidate' => $candidate
             ]);
+            
+
 
             // Load HTML to Dompdf
             $dompdf->loadHtml($html);
