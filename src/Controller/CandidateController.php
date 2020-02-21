@@ -7,6 +7,8 @@ use App\Entity\Candidate;
 use App\Entity\Criteria;
 use App\Entity\Quiz;
 use App\Entity\Result;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,6 +94,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/quiz/{nameQ}/candidates/{nameC}/summary", name="summary_candidate")
      */
@@ -99,8 +102,48 @@ class CandidateController extends AbstractController
     {
 
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
+        if ($request->isMethod('POST')) {
+            //Configure Dompdf according to your needs
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+
+            // Instantiate Dompdf with our options
+            $dompdf = new Dompdf($pdfOptions);
+
+            // Retrieve the HTML generated in our twig file
+            $html = $this->renderView('candidate/pdfSummary.html.twig', [
+                'title' => "Welcome to our PDF Test"
+            ]);
+
+            // Load HTML to Dompdf
+            $dompdf->loadHtml($html);
+
+            // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+            $dompdf->setPaper('A4', 'portrait');
+
+            // Render the HTML as PDF
+            $dompdf->render();
+
+            // Output the generated PDF to Browser (force download)
+            $dompdf->stream("mypdf.pdf", [
+                "Attachment" => true
+            ]);
+        }
 
         return $this->render('candidate/summary.html.twig', [
+            'candidate' => $candidate,
+        ]);
+    }
+
+    /**
+     * @Route("/quiz/{nameQ}/candidates/{nameC}/summary/pdf", name="pdf_summary_candidate")
+     */
+    public function getSummaryPdf(string $nameC, Request $request)
+    {
+
+        $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
+
+        return $this->render('candidate/pdfSummary.html.twig', [
             'candidate' => $candidate,
         ]);
     }
