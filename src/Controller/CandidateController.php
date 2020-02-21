@@ -105,7 +105,7 @@ class CandidateController extends AbstractController
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
         $name = $candidate->getFullname();
         $strippedName = str_replace(' ', '', $name);
-        
+
         //https://ourcodeworld.com/articles/read/799/how-to-create-a-pdf-from-html-in-symfony-4-using-dompdf Pour le pdf
         if ($request->isMethod('POST')) {
             //Configure Dompdf according to your needs
@@ -138,9 +138,7 @@ class CandidateController extends AbstractController
      */
     public function getSummaryPdf(string $nameC, Request $request)
     {
-
         $candidate = $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['fullname' => $nameC]);
-
         return $this->render('candidate/pdfSummary.html.twig', [
             'candidate' => $candidate,
         ]);
