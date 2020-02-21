@@ -16,11 +16,11 @@
                             <h5 class="card-title">{{candidate.fullname}}</h5>
                             <p>{{candidate.email}}</p>
                             {% if candidate.results[0].oralreview is not empty %}
-                                <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Editer les notes de l'entretien oral</a>
+                                <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-info" >Editer les notes de l'entretien oral</a>
                             {% else %}
-                                <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Ajouter les notes de l'entretien oral</a>
+                                <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-info" >Ajouter les notes de l'entretien oral</a>
                             {% endif %}
-                            <a href="{{path('summary_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Obtenir récapitulatif</a>
+                            <a href="{{path('summary_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-info" >Obtenir le récapitulatif</a>
                         </div>
                     </div>
                 </div>
@@ -29,31 +29,29 @@
     </div>
     <div class="row">
         <div class="col-md-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table text-center">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Test</th>
-                            <th>Oral</th>
-                            <th>Moyenne critère</th>
-                            <th>Acquis</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for result in candidate.results %}
-                                <tr>
-                                    <th>{{ result.criteria.name }}</th>
-                                    <td>{{ result.testreview }}</td>
-                                    <td class="oral">{{ result.oralreview }}</td>
-                                    <td>{{ result.average}}</td>
-                                    <td>{{ result.acquis}}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Test</th>
+                        <th>Oral</th>
+                        <th>Moyenne critère</th>
+                        <th>Acquis</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in candidate.results %}
+                            <tr>
+                                <th>{{ result.criteria.name }}</th>
+                                <td>{{ result.testreview }}</td>
+                                <td class="oral">{{ result.oralreview }}</td>
+                                <td>{{ result.average}}</td>
+                                <td>{{ result.acquis}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

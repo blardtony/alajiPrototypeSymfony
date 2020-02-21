@@ -4,13 +4,23 @@
 
 {% block body %}
 <div class="container">
-    <h1 class="text-center">Examinateur : {{ teacher.fullname }}</h1>
-    <form class="form" action="" method="post">
-        <input type="submit" name="update" value="Mettre à jour" class="btn btn-primary">
-    </form>
+    <div class="row mt-3">
+        <div class="col-lg-1">
+            <form class="form" action="" method="post">
+                <input type="submit" name="update" value="Mettre à jour" class="btn btn-info">
+            </form>
+        </div>
+        <div class="col-lg-11">
+            <h1 class="text-center">Examinateur : {{ teacher.fullname }}</h1>
+        </div>
+    </div>
     <h2 class="mt-3">Sélectionnez un quizz</h2>
-    {% for quiz in teacher.quizzes %}
-        <a href="{{ path("list_candidates", {name : quiz.name} ) }}">{{ quiz.name }}</a>
-    {% endfor %}
+    <div class="row">
+        {% for quiz in teacher.quizzes %}
+            <div class="col-md-6">
+                <a class="btn btn-link btn-block" href="{{ path("list_candidates", {name : quiz.name} ) }}">{{ quiz.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
