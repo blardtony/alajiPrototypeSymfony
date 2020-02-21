@@ -50,11 +50,24 @@ class TeacherController extends AbstractController
 
         $idCourses = $courses['groups'][0]['courseid'];
 
+
         $quizzes = $teacherApi->getQuiz($idCourses);
+
         $nameQuiz = $quizzes["quizzes"][0]['name'];
+
         $idQuiz = $quizzes["quizzes"][0]['id'];
 
         $quizDb = $this->getDoctrine()->getRepository(Quiz::class)->findOneBy(['moodleId' => $idQuiz]);
+        if (!$quizDb) {
+            $quizDb = new Quiz;
+            $quizDb->setName($nameQuiz);
+            $quizDb->setMoodleId($idQuiz);
+            $quizDb->setTeacher($teacher);
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($quizDb);
+            $manager->flush();
+        }
 
         $quizDb->setName($nameQuiz);
         $quizDb->setMoodleId($idQuiz);

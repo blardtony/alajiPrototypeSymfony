@@ -5,7 +5,10 @@
 {% block body %}
 <div class="container">
     <h1 class="text-center">Examinateur : {{ teacher.fullname }}</h1>
-    <h2 class="">Sélectionnez un quizz</h2>
+    <form class="form" action="" method="post">
+        <input type="submit" name="update" value="Mettre à jour" class="btn btn-primary">
+    </form>
+    <h2 class="mt-3">Sélectionnez un quizz</h2>
     {% for quiz in teacher.quizzes %}
         <a href="{{ path("list_candidates", {name : quiz.name} ) }}">{{ quiz.name }}</a>
     {% endfor %}
