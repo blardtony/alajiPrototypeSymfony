@@ -337,8 +337,15 @@ class TeacherController extends AbstractController
                             'candidate' => $idCandidateDb,
                             'criteria' => $idNameCriteria
                         ]);
-
-
+                        if (!$testNoteDb) {
+                            $testNoteDb = new Result;
+                            $testNoteDb->setCandidate($dbCandidate);
+                            $testNoteDb->setCriteria($nameCriteria);
+                            $testNoteDb->setTestreview($testNote);
+                            $manager = $this->getDoctrine()->getManager();
+                            $manager->persist($testNoteDb);
+                            $manager->flush();
+                        }
                         $testNoteDb->setCandidate($dbCandidate);
                         $testNoteDb->setCriteria($nameCriteria);
                         $testNoteDb->setTestreview($testNote);
@@ -382,8 +389,15 @@ class TeacherController extends AbstractController
                     'candidate' => $idCandidateDb,
                     'criteria' => $idNameCriteria
                 ]);
-
-
+                if (!$testNoteDb) {
+                    $testNoteDb = new Result;
+                    $testNoteDb->setCandidate($dbCandidate);
+                    $testNoteDb->setCriteria($nameCriteria);
+                    $testNoteDb->setTestreview($testNote);
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($testNoteDb);
+                    $manager->flush();
+                }
                 $testNoteDb->setCandidate($dbCandidate);
                 $testNoteDb->setCriteria($nameCriteria);
                 $testNoteDb->setTestreview($testNote);

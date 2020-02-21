@@ -21,6 +21,7 @@ class QuizController extends AbstractController
             $teacherController->postCandidate($teacherApi);
             $teacherController->postCriteria($teacherApi);
             $teacherController->postResult($teacherApi);
+            $teacherController->postcoef($teacherApi);
         }
         return $this->render('quiz/index.html.twig', [
             'teacher' => $user
