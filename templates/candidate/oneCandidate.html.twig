@@ -15,7 +15,7 @@
                         <div class="col-lg-9">
                             <h5 class="card-title">{{candidate.fullname}}</h5>
                             <p>{{candidate.email}}</p>
-                            {% if results[0].oralreview is not empty %}
+                            {% if candidate.results[0].oralreview is not empty %}
                                 <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Editer les notes de l'entretien oral</a>
                             {% else %}
                                 <a href="{{path('form_candidate', {nameC : candidate.fullname, nameQ : quiz.name})}}" class="btn btn-primary" >Ajouter les notes de l'entretien oral</a>

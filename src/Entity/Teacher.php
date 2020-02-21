@@ -55,6 +55,11 @@ class Teacher implements UserInterface
      */
     private $moodleId;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $organismName;
+
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
@@ -221,6 +226,18 @@ class Teacher implements UserInterface
     public function setMoodleId(int $moodleId): self
     {
         $this->moodleId = $moodleId;
+
+        return $this;
+    }
+
+    public function getOrganismName(): ?string
+    {
+        return $this->organismName;
+    }
+
+    public function setOrganismName(string $organismName): self
+    {
+        $this->organismName = $organismName;
 
         return $this;
     }
