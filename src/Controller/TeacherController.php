@@ -119,6 +119,18 @@ class TeacherController extends AbstractController
 
                 $candidateDb =  $this->getDoctrine()->getRepository(Candidate::class)->findOneBy(['moodleId' => $idCandidate]);
 
+                if (!$candidateDb) {
+                    $candidateDb = new Candidate;
+                    $candidateDb->setFullname($fullnameCandidate);
+                    $candidateDb->setMoodleId($idCandidate);
+                    $candidateDb->setEmail($emailCandidate);
+                    $candidateDb->setTeacher($teacher);
+                    $candidateDb->setAvatar($avatarCandidate);
+
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($candidateDb);
+                    $manager->flush();
+                }
 
                 $candidateDb->setFullname($fullnameCandidate);
                 $candidateDb->setMoodleId($idCandidate);
@@ -177,7 +189,14 @@ class TeacherController extends AbstractController
 
 
             $criteriaDb =  $this->getDoctrine()->getRepository(Criteria::class)->findOneBy(['name' => $nameQuestion]);
-
+            if (!$criteriaDb) {
+                $criteriaDb = new Criteria;
+                $criteriaDb->setName($nameQuestion);
+                $criteriaDb->setQuiz($quizCriteria);
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($criteriaDb);
+                $manager->flush();
+            }
             $criteriaDb->setName($nameQuestion);
             $criteriaDb->setQuiz($quizCriteria);
             $manager = $this->getDoctrine()->getManager();
@@ -239,12 +258,11 @@ class TeacherController extends AbstractController
 
 
                 $testNoteDb =  $this->getDoctrine()->getRepository(Result::class)->findOneBy([
-                    'testreview' => $testNote,
                     'candidate' => $idCandidateDb,
                     'criteria' => $idNameCriteria
                 ]);
 
-
+                
                 $testNoteDb->setCandidate($dbCandidate);
                 $testNoteDb->setCriteria($nameCriteria);
                 $testNoteDb->setTestreview($testNote);
