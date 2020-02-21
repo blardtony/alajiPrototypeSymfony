@@ -60,6 +60,11 @@ class Teacher implements UserInterface
      */
     private $organismName;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $OrganismLogo;
+
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
@@ -238,6 +243,18 @@ class Teacher implements UserInterface
     public function setOrganismName(string $organismName): self
     {
         $this->organismName = $organismName;
+
+        return $this;
+    }
+
+    public function getOrganismLogo(): ?string
+    {
+        return $this->OrganismLogo;
+    }
+
+    public function setOrganismLogo(?string $OrganismLogo): self
+    {
+        $this->OrganismLogo = $OrganismLogo;
 
         return $this;
     }
