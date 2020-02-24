@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=500, initial-scale=1">
+        <meta name="description" content="Le site du futur">
         <title>Alaji - {% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
@@ -9,17 +11,17 @@
     <body>
         <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-info">
             <div class="container">
-                <span class="navbar-brand" href="">Prototype Alaji</span>
+                <span class="navbar-brand font-weight-bold" href="">Prototype Alaji</span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{ path('quiz_list') }}">Liste des quiz<span class="sr-only">(current)</span></a>
+                            <a class="nav-link font-weight-bold" href="{{ path('quiz_list') }}">Liste des quiz<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link logout" href="{{ path('app_logout') }}">Déconnexion<span class="sr-only">(current)</span></a>
+                            <a class="nav-link logout font-weight-bold" href="{{ path('app_logout') }}">Déconnexion<span class="sr-only">(current)</span></a>
                         </li>
                     </ul>
                 </div>
